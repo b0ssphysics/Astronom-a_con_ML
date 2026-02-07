@@ -105,6 +105,33 @@ ani = FuncAnimation(
 )
 
 plt.show()
+#save the figure 
+ani.save('magnitud_observada.gif', writer='imagemagick', fps=5)
 
 
+# -------------------------------
+# Panel adicional: evolución de las 24 horas en una sola gráfica, después de discutirlo con el profesor Alejandro
 
+# -------------------------------
+
+plt.figure(figsize=(7,5))
+
+cmap = plt.cm.viridis
+colors = cmap(np.linspace(0, 1, len(tiempo)))
+
+for i, m in enumerate(magnitudes_tiempo):
+    plt.plot(distancias, m, color=colors[i], alpha=0.3)
+
+plt.gca().invert_xaxis()
+plt.xlabel('Distancia al horizonte (km)')
+plt.ylabel('Magnitud observada')
+plt.title('Magnitud observada vs Distancia al horizonte (24 h)')
+plt.grid()
+
+sm = plt.cm.ScalarMappable(cmap=cmap)
+sm.set_array(tiempo)
+cbar = plt.colorbar(sm, ax=plt.gca())
+cbar.set_label('Hora del día (h)')
+plt.show()
+#guardar la figura
+plt.savefig('magnitud_observada_24h.png', dpi=300)
